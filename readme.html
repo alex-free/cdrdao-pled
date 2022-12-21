@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>cdrdao-af</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #FFFFFF;
+      background-color: #000000;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #58D3F7;
+    }
+    a:visited {
+      color: #58D3F7;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      border: 2px double blue;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border: 2px double blue;
+    }
+    th {
+      border: 2px double blue;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+        border: 2px double blue;
+        padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">cdrdao-af</h1>
+</header>
+<h1 id="alex-free.github.io"><a href="https://alex-free.github.io">alex-free.github.io</a></h1>
+<h1 id="cdrdao-af---cdrdao-fork-with-a-bug-fix-for-using-the-generic-mmc-raw-driver-with-the---swap-argument">CDRDAO-AF - CDRDAO Fork With A Bug Fix For Using The Generic-MMC-Raw Driver With The <code>--swap</code> Argument</h1>
+<p>By Alex Free</p>
+<p><a href="https://cdrdao.sourceforge.net/">CDRDAO</a> is a portable open source CD ripping and burning program. My fork of CDRDAO described on this page fixes a fatal <a href="https://github.com/cdrdao/cdrdao/issues/12">bug</a> which prevented <em>some PSX disc images which contain an additional <a href="https://alex-free.github.io/tonyhax-international/#bypassing-additional-edc-checks-found-in-some-games">(EDC-based)</a> anti-piracy measure from being burned correctly by CDRDAO</em>.</p>
+<h2 id="burning-with-the-generic-mmc-driver">Burning With The Generic-MMC Driver</h2>
+<p>For almost all PSX CD images (which do not contain an additional EDC-based anti-piracy measure), you have always been able to use one of the following commands below to burn a correct PSX CD-R disc with the <a href="https://github.com/cdrdao/cdrdao/tree/dev">official CDRDAO</a>:</p>
+<p><code>cdrdao write --speed 1 --driver generic-mmc --eject yourgamerip.cue</code></p>
+<p><em>If using the above command results in a CD-R which has audio tracks containing loud static noise <strong>instead of the exepected, correct CD audio playback</strong> you need to <code>byteswap</code> the CD audio tracks while burning (by providing the <code>--swap</code> argument), with this alternative command below:</em></p>
+<p><code>cdrdao write --speed 1 --driver generic-mmc --swap --eject yourgamerip.cue</code></p>
+<p>The <code>--swap</code> argument is <em>only required for some CD images that you want to burn, but not all</em>.</p>
+<p><strong>You must first <code>cd</code> into the directory of the CD image rip before you run cdrdao, so that the <code>.cue</code> file of the rip is in the current directory</strong></p>
+<p>The <code>generic-mmc</code> driver (like almost every other CD burning program by default as well) corrects any <code>incorrect EDC</code> data it finds inside the CD image used while burning. This is actually a feature, and usually what you want. <strong>Unless you run into i.e. a PSX game which abuses this fact to provide an additional anti-piracy copy protection measure.</strong></p>
+<p>Introducing EDC-based additional anti-piracy copy protection found in some later PSX games. If you burn a CD image of a game which contains this EDC-based additional anti-piracy copy protection with the <code>generic-mmc</code> driver, CDRDAO (just like most other CD burning programs by default) will actually ‘correct’ incorrect EDC data it finds (which has been intentionally placed in various sector(s) of the original CD-ROM from which the CD image was originally ripped from). This changes what data the game itself reads from a specific part of the disc during a specific time/check function. If the game’s code itself doesn’t read the expected ‘incorrect’ EDC data, it knows that this disc is a copy and will lock up.</p>
+<p>The good news is, there is a way around this. Some CD burning programs provide an option to not ‘update/correct’ EDC data as the CD image is burned to a CD-R. CDRDAO provides the <code>generic-mmc-raw</code> driver, which does offer this functionality. The problem is, since seemingly the inception of the <code>generic-mmc-raw</code> driver, <em>the <code>--swap</code> argument does not work in combination with the generic-mmc-raw driver specifically</em> due to a bug. This prevents you from burning a CD-R which both doesn’t update any EDC data, and has the correct byteorder for the CD audio tracks. CD images that do not require the <code>--swap</code> argument work as expected when burned by the <code>generic-mmc-raw</code> driver, but it is currently impossible to correctly burn CD images that do require the <code>--swap</code> argument with the <code>generic-mmc-raw</code> driver in the official CDRDAO.</p>
+<p>I have finally tracked down this previously unknown <a href="https://github.com/cdrdao/cdrdao/issues/12">bug</a>, and provided a <a href="https://github.com/cdrdao/cdrdao/pull/14">fix</a> that I am trying to get into the official CDRDAO. For now, I have created my <a href="https://github.com/alex-free/cdrdao/tree/dev">own fork</a> which provides the bug fix enabling the <code>--swap</code> argument with the <code>generic-mmc-raw</code> driver correctly.</p>
+<h2 id="burning-with-the-generic-mmc-raw-driver">Burning With The Generic-MMC-Raw Driver</h2>
+<p>So for <a href="#psx-cd-images-which-wont-work-the-generic-mmc-raw-driver">almost any PSX game CD image</a> (<strong>including those which contain additional EDC-based copy protection</strong>), you can use one of the below CDRDAO commands to correctly burn them:</p>
+<p><code>cdrdao write --speed 1 --driver generic-mmc-raw --eject yourgamerip.cue</code></p>
+<p><em>If using the above command results in a CD-R which has audio tracks containing loud static noise <strong>instead of the exepected, correct CD audio playback</strong> you need to <code>byteswap</code> the CD audio tracks while burning (by providing the <code>--swap</code> argument), with this alternative command below:</em></p>
+<p><code>cdrdao write --speed 1 --driver generic-mmc-raw --swap --eject yourgamerip.cue</code></p>
+<p>The <code>--swap</code> argument is <em>only required for some CD images that you want to burn, but not all</em>.</p>
+<p><strong>You must first <code>cd</code> into the directory of the CD image rip before you run cdrdao, so that the <code>.cue</code> file of the rip is in the current directory</strong>:</p>
+<figure>
+<img src="images/ddr2-burn-raw-swap.png" alt="Dance Dance Revolution 2nd Remix Japan Burn (Raw + Swap)" /><figcaption aria-hidden="true">Dance Dance Revolution 2nd Remix Japan Burn (Raw + Swap)</figcaption>
+</figure>
+<figure>
+<img src="images/ds-burn-raw-swap.png" alt="DarkStalkers USA Burn (Raw + Swap)" /><figcaption aria-hidden="true">DarkStalkers USA Burn (Raw + Swap)</figcaption>
+</figure>
+<h3 id="psx-cd-images-which-wont-work-the-generic-mmc-raw-driver">PSX CD Images Which Won’t Work The Generic-MMC-Raw Driver</h3>
+<ul>
+<li><p>CD images of LibCrypt games currently can’t be burned correctly with the <code>generic-mmc-raw</code> driver.</p></li>
+<li><p>CD images of games that have been <a href="https://alex-free.github.io/ps1demoswap">TOCPerfect Patched</a> and or <a href="https://alex-free.github.io/aprip/#patching-the-cd-image">APrip Patched</a> can’t be burned correctly with the <code>generic-mmc-raw</code> driver currently, because these patching programs actually rely on the EDC data being updated by the <code>generic-mmc</code> driver during the burn. These patcher programs do not update the EDC themselves after patching/changing/updating the CD image. This is a current limitation of those programs however, and not a CDRDAO limitation in itself.</p></li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://alex-free.github.io/cdrdao">Homepage</a></li>
+<li><a href="https://github.com/alex-free/cdrdao/tree/dev">Github</a></li>
+</ul>
+<h2 id="downloads">Downloads</h2>
+<h3 id="version-1.0-af-12212022">Version 1.0-af (12/21/2022)</h3>
+<ul>
+<li><a href="https://github.com/alex-free/cdrdao-pled/releases/download/v1.0-af/cdrdao-1.0-af-x86_64.zip">cdrdao-1.0-af-x86_64</a> <em>For modern x86_64 Linux distros</em></li>
+</ul>
+<h2 id="compiling-from-source">Compiling From Source</h2>
+<p>Installing from source allows you to compile your own CDRDAO-AF release for a different Linux version, distribution, and or CPU architecture (i.e. ARM, x86 32-bit, etc.).</p>
+<p>First of all, install all the pre-requisites required for building CDRDAO-AF from source:</p>
+<ul>
+<li><a href="https://www.gnu.org/software/make/">GNUmake</a></li>
+<li><a href="https://www.gnu.org/software/gcc">GCC/G++</a></li>
+<li><a href="https://www.gnu.org/software/bash">Bash</a></li>
+<li><a href="https://git-scm.com/">Git</a></li>
+<li><a href="https://xiph.org/ao/">Libao</a></li>
+<li><a href="https://www.gnu.org/software/automake/">GNU Automake</a></li>
+<li><a href="https://www.gnu.org/software/autoconf/">GNU Autoconf</a></li>
+<li><a href="https://infozip.sourceforge.net/">Zip</a></li>
+</ul>
+<p>On Fedora Linux, you can install all of the above with this command:</p>
+<p><code>sudo dnf install autoconf automake libao-devel make bash git gcc g++ zip</code></p>
+<p>The next 2 sections describe the 2 different ways to compile my cdrdao fork. The <code>Pled Method</code> creates a portable cdrdao release that can be used on multiple linux distros that share the same CPU architecture. The <code>Traditional Method</code> describes the original, intended method of installing/compiling cdrdao manually, as well as installing directly into <code>/usr/local</code> so that cdrdao is available in your <code>$PATH</code> (although it is not portable in this case).</p>
+<h3 id="pled-method">Pled Method</h3>
+<p>Clone the <code>cdrdao-pled</code> source tree from GitHub recursively using git:</p>
+<pre><code>git clone --recursive https://github.com/alex-free/cdrdao-pled</code></pre>
+<p>Now that the entire CDRDAO-AF source tree is recursively cloned, <code>cd</code> into the <code>cdrdao-pled</code> directory and execute the <code>./build.sh</code> script. Then just wait a bit for your release <code>.zip</code> file to be generated by the <code>build</code> script. A release directory will also be created, allowing you to immediately use CDRDAO-AF.</p>
+<p>If you want to clean your CDRDAO-AF source tree of all built binaries/releases, simply execute <code>./build.sh clean</code>. The <code>clean</code> argument will tell the <code>build</code> script to simply exit after resetting the source tree.</p>
+<h3 id="traditional-method">Traditional Method</h3>
+<p>Clone my CDRDAO fork’s <code>dev</code> branch from GitHub using git:</p>
+<pre><code>git clone -b dev https://github.com/alex-free/cdrdao</code></pre>
+<p>Next, <code>cd</code> into the <code>cdrdao</code> directory and execute the following commands:</p>
+<p><code>./autogen.sh</code></p>
+<p><code>autoreconf</code></p>
+<p><code>./configure</code></p>
+<p><code>make</code></p>
+<p>You can then <code>make install</code> into <code>/usr/local</code>.</p>
+</body>
+</html>

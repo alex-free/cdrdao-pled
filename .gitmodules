@@ -1,0 +1,7 @@
+[submodule "cdrdao"]
+	path = cdrdao
+	url = https://github.com/alex-free/cdrdao
+	branch = dev
+[submodule "pled"]
+	path = pled
+	url = https://github.com/alex-free/pled
