@@ -1,7 +1,7 @@
 #!/bin/bash
-version=1.0-af
-arch=$(uname -p)
 cd "$(dirname "$0")"
+version=$(cd cdrdao; git rev-parse --short HEAD)-pled
+arch=$(uname -p)
 rm -rf build-tmp cdrdao-$version-$arch cdrdao-$version-$arch.zip
 # Just clean built binaries/releases from source and exit now if given the argument 'clean'
 if [ "$1" == "clean" ]; then
@@ -17,8 +17,12 @@ set -e
 ./configure
 make -j`nproc`
 ../../pled/pled dao/cdrdao
+../../pled/pled utils/toc2cue
+../../pled/pled utils/cue2toc
 # dump shared libraries/wrapper/executable from cdrdao to release bin directory
 cp -rp cdrdao-pled/* ../../cdrdao-$version-$arch/
+cp -rp toc2cue-pled/* ../../cdrdao-$version-$arch/
+cp -rp cue2toc-pled/* ../../cdrdao-$version-$arch/
 cd ../../
 rm -rf build-tmp
 chmod -R 775 cdrdao-$version-$arch/cdrdao
