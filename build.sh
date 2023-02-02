@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-version=$(cd cdrdao; git rev-parse --short HEAD)-pled
+version=$(cd cdrdao; git rev-parse --short HEAD)-pled-1.0.2
 arch=$(uname -p)
 rm -rf build-tmp cdrdao-$version-$arch cdrdao-$version-$arch.zip
 # Just clean built binaries/releases from source and exit now if given the argument 'clean'
