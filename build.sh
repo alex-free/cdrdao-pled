@@ -29,10 +29,7 @@ chmod -R 775 cdrdao-$version-$arch/cdrdao
 # Copy licenses to release
 cp -rp cdrdao/COPYING cdrdao-$version-$arch/licenses/cdrdao-license.txt
 cp -rp pled/unlicense.txt cdrdao-$version-$arch/licenses/pled.txt
-# Generate HTML
-./gen-html.sh
 cp -p readme.md cdrdao-$version-$arch/readme.md
-cp -p readme.html cdrdao-$version-$arch/readme.html
 cp -rp images cdrdao-$version-$arch/
 # Copy documentation to release
 # cp -rp readme.html readme.md images cdrdao-$version-$arch/
