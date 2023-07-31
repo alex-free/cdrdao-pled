@@ -17,9 +17,21 @@
 
 ## Downloads
 
-### Version 0afa49e-pled-1.0.2 (2/1/2023)
+### Version c2b0ff2-pled-1.0.3-x86_64 (7/31/2023)
 
-*	[cdrdao-0afa49e-pled-1.0.2-x86\_64](https://github.com/alex-free/cdrdao-pled/releases/download/v1.0.2-pled/cdrdao-0afa49e-pled-1.0.2-x86_64.zip) _For modern x86_64 Linux distros_
+*	[cdrdao-c2b0ff2-pled-1.0.3-x86\_64](https://github.com/alex-free/cdrdao-pled/releases/download/v1.0.3-pled/cdrdao-c2b0ff2-pled-1.0.3-x86_64.zip) _For modern x86_64 Linux distros_
+
+Changes: 
+
+*   Updated to the latest [PLED](https://alex-free.github.io/pled) v1.0.2.
+
+*   Updated to latest [CDRDAO](https://github.com/cdrdao/cdrdao/tree/dev) dev branch [commit](https://github.com/cdrdao/cdrdao/commit/c2b0ff2740ecc94e976e67e8d6527cfb7107b21f).
+
+*   Improved `build.sh` script.
+
+*   Added [info](#important-info-on-tocperfectaprip-patched-cd-images) on burning CD images of games that have been [TOCPerfect Patched](https://alex-free.github.io/ps1demoswap) and or [APrip Patched](https://alex-free.github.io/aprip/).
+
+[About previous versions.](changelog.md)
 
 ## Burning BIN/CUE CD Images
 
@@ -43,14 +55,7 @@ The `--eject` argument will automatically eject the disc immediately after a suc
 
 ### Important Info On TOCPerfect/APRIP Patched CD Images
 
-CD images of games that have been [TOCPerfect Patched](https://alex-free.github.io/ps1demoswap) and or [APrip Patched](https://alex-free.github.io/aprip/#patching-the-cd-image) can't be burned correctly with the `generic-mmc-raw` driver currently, because these patching programs currently don't regenerate EDC data themselves and actually rely on the EDC data being updated by the burning program. This is a current limitation of those programs however, and not a CDRDAO limitation in itself.
-
-To burn CD images that have been TOCPerfect and or APRIP Patched, use the following command instead:
-
-`cdrdao write --speed 1 --swap --eject yourgame.cue`
-
-This command does not include the `--driver generic-mmc-raw` arguments, which makes CDRDAO fallback to the default `generic-mmc` driver which **does regenerate EDC data.**
-
+CD images of games that have been [TOCPerfect Patched](https://alex-free.github.io/ps1demoswap) and or [APrip Patched](https://alex-free.github.io/aprip/#patching-the-cd-image) need to be ran through [EDCRE](https://alex-free.github.io/edcre) first before you burn with the `generic-mmc-raw` driver.
 ## Burning BIN/TOC CD Images
 
 To burn a CD image in the native CDRDAO BIN/TOC format, use the following command:
