@@ -1,0 +1,58 @@
+#!/bin/bash
+
+program=cdrdao
+version=$(cd cdrdao; git rev-parse --short HEAD)-pled-1.0.4-linux
+arch=$(uname -m)
+release=$program-$version-$arch
+
+# When this script exits, automatically delete the temp directory.
+cleanup() 
+{ 
+    if [[ -e "$tmp" ]]; then
+        echo "Clearing temp files..."  
+        rm -r "$tmp"   
+    fi
+}
+trap cleanup EXIT
+
+# Print out any uncaught errors.
+err() 
+{	
+    echo -e "\nUncaught error in $0, line number: $BASH_LINENO" >&2
+}
+trap err ERR
+
+set -e
+cd "$(dirname "$0")"
+rm -rf $release $release.zip
+
+# Just clean built binaries/releases from source and exit now if given the argument 'clean'
+if [ "$1" == "clean" ]; then
+    exit 0
+fi
+
+if command -v dnf > /dev/null 2>&1; then
+    sudo dnf install -y autoconf automake libao-devel make bash git gcc g++ zip
+elif command -v apt > /dev/null 2>&1; then
+    sudo apt install --yes build-essential libao-dev zip
+fi
+
+# Put temp directory in /tmp (or whatever the OS prefers)
+tmp=$(mktemp -d --tmpdir cdib.XXX)
+
+mkdir -p  $release/licenses
+
+cp -r cdrdao $tmp
+(cd $tmp/cdrdao; autoreconf)
+(cd $tmp/cdrdao; ./configure)
+make -j`nproc` -C $tmp/cdrdao
+
+pled/pled $tmp/cdrdao/dao/cdrdao $release
+pled/pled $tmp/cdrdao/utils/toc2cue $release
+pled/pled $tmp/cdrdao/utils/cue2toc $release
+
+cp  cdrdao/COPYING $release/licenses/cdrdao-license.txt
+cp  pled/unlicense.md $release/licenses/pled.md
+cp -r readme.md changelog.md $release
+chmod -R 777 $release
+zip -r $release.zip $release
