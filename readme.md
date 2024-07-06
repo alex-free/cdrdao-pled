@@ -8,17 +8,15 @@ CDRDAO is a portable open source CD ripping and burning program. CDRDAO-PLED is 
 
 ## Downloads
 
-### Version c2b0ff2-pled-1.0.4-linux-x86_64 (4/21/2024)
+### Version c2b0ff2-pled-1.0.5-linux-x86_64 (7/5/2024)
 
 Changes: 
 
-*   Updated [PLED](https://alex-free.github.io/pled) to v1.0.5.
-
-*   Improved `build` script.
+*   Fixed build script not working when executed from outside of the source directory.
 
 ----------------------------------
 
-*	[cdrdao-c2b0ff2-pled-1.0.4-linux-x86\_64](https://github.com/alex-free/cdrdao-pled/releases/download/v1.0.4-pled/cdrdao-c2b0ff2-pled-1.0.4-linux-x86_64.zip) _For x86_64 Linux_
+*	[cdrdao-c2b0ff2-pled-1.0.5-linux-x86\_64](https://github.com/alex-free/cdrdao-pled/releases/download/v1.0.5-pled/cdrdao-c2b0ff2-pled-1.0.5-linux-x86_64.zip) _For x86_64 Linux_
 
 ----------------------------------
 

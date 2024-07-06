@@ -1,9 +1,7 @@
 #!/bin/bash
 
 program=cdrdao
-version=$(cd cdrdao; git rev-parse --short HEAD)-pled-1.0.4-linux
 arch=$(uname -m)
-release=$program-$version-$arch
 
 # When this script exits, automatically delete the temp directory.
 cleanup() 
@@ -24,6 +22,9 @@ trap err ERR
 
 set -e
 cd "$(dirname "$0")"
+version=$(cd cdrdao; git rev-parse --short HEAD)-pled-1.0.5-linux
+release=$program-$version-$arch
+
 rm -rf $release $release.zip
 
 # Just clean built binaries/releases from source and exit now if given the argument 'clean'
